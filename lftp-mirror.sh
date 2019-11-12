@@ -9,6 +9,7 @@ PORT=${PORT}\\n\
 USERNAME=${USERNAME}\\n\
 PASSWORD=${PASSWORD}\\n\
 REMOTE_DIR=${REMOTE_DIR}\\n\
+TEMP_DIR=${TEMP_DIR}\\n\
 FINISHED_DIR=${FINISHED_DIR}\\n\
 LFTP_PARTS=${LFTP_PARTS}\\n\
 LFTP_FILES=${LFTP_FILES}\\n"
@@ -30,7 +31,7 @@ do
 	lftp -u $USERNAME,$PASSWORD sftp://$HOST -p $PORT <<-EOF
         set ssl:verify-certificate no
         set sftp:auto-confirm yes
-	    mirror -c --no-empty-dirs --Remove-source-files --Remove-source-dirs --use-pget-n=$LFTP_PARTS -P$LFTP_FILES $REMOTE_DIR /config/.download
+	    mirror -c --no-empty-dirs --Remove-source-files --Remove-source-dirs --use-pget-n=$LFTP_PARTS -P$LFTP_FILES $REMOTE_DIR $TEMP_DIR
 	quit
 	EOF
 
@@ -39,8 +40,8 @@ do
     	# Move finished downloads to destination directory
     	echo "[$(date '+%H:%M:%S')] Moving files....."
 
-	chmod -R 777 /config/.download/*
-        mv -fv "/config/.download/"* "$FINISHED_DIR"
+	chmod -R 777 "$TEMP_DIR"/*
+        mv -fv "$TEMP_DIR"/* "$FINISHED_DIR"
     else
         echo "[$(date '+%H:%M:%S')] Nothing to download"
     fi
