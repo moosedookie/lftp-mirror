@@ -14,15 +14,6 @@ FINISHED_DIR=${FINISHED_DIR}\\n\
 LFTP_PARTS=${LFTP_PARTS}\\n\
 LFTP_FILES=${LFTP_FILES}\\n"
 
-# if no finished files directory specified, default to /config/download
-[ -z "$FINISHED_DIR" ] && FINISHED_DIR="/config/download"
-
-# create a directory for active downloads
-mkdir -p /config/.download
-
-# create finished downloads directory
-mkdir -p /config/download
-
 while true
 do
 	# LFTP with specified segment & parallel
@@ -40,8 +31,8 @@ do
     	# Move finished downloads to destination directory
     	echo "[$(date '+%H:%M:%S')] Moving files....."
 
-	chmod -R 777 "$TEMP_DIR"/*
-        mv -fv "$TEMP_DIR"/* "$FINISHED_DIR"
+	chmod -R 777 $TEMP_DIR/*
+        mv -fv $TEMP_DIR/* $FINISHED_DIR
     else
         echo "[$(date '+%H:%M:%S')] Nothing to download"
     fi
