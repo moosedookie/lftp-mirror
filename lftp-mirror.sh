@@ -40,7 +40,7 @@ do
     	echo "[$(date '+%H:%M:%S')] Moving files....."
 
 	chmod -R 777 /config/.download/*
-        mv -fv /config/.download/* $FINISHED_DIR
+        mv -fv "/config/.download/"* "$FINISHED_DIR"
     else
         echo "[$(date '+%H:%M:%S')] Nothing to download"
     fi
