@@ -1,4 +1,4 @@
-FROM gregyankovoy/alpine-base
+FROM moosedookie/alpine-base
 
 RUN apk add --update --no-cache \
     lftp \
